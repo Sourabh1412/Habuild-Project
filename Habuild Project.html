@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoga Challenge Follow-Up</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: url('./1.png') no-repeat center center/cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 590px;
+            width: 90%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(236, 236, 223, 0.95));
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: #e4e3e3 transparent;
+        }
+
+
+        .container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: #0ee6e6;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        p.description {
+            text-align: center;
+            color: #0c0c0c;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #141616;
+            font-size: 0.95rem;
+        }
+
+        select,
+        textarea,
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #000000;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        textarea::placeholder,
+        input::placeholder {
+            color: #a0bfc2;
+        }
+
+        .error-message {
+            color: #d93025;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #07dcf8, #19f0ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(1, 238, 255, 0.6);
+            transition: all 0.4s ease;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            transform: scale(1.08);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.6);
+        }
+
+        .thank-you,
+        .gift-link,
+        .support-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .thank-you {
+            color: #10b981;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .gift-link a {
+            color: #3734a9;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .gift-link a:hover {
+            text-decoration: underline;
+            color: #1e1a80;
+        }
+
+        .support-message {
+            color: #0f5132;
+            font-weight: bold;
+            font-size: 1.1rem;
+            background: #d1e7dd;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .support-message a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        .support-message a:hover {
+            text-decoration: underline;
+        }
+
+        .custom-select {
+            position: relative;
+            background: white;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 6px;
+            user-select: none;
+        }
+
+        .custom-select .options {
+            display: none;
+            position: absolute;
+            width: 100%;
+            background: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .custom-select .option {
+            padding: 10px;
+            transition: all 0.3s;
+        }
+
+        .custom-select .option:hover {
+            background: linear-gradient(to right, orange, #fcbf18);
+            color: black;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>We Miss Your Yoga Energy! 🧘‍♀️</h1>
+        <p class="description">
+            Thanks for joining our free challenge! We'd love to know what you're up to—and how we can support your yoga
+            journey from here. Share your thoughts below and get a free gift!
+        </p>
+
+        <form id="feedbackForm" novalidate>
+            <label for="reason">What's stopping you from continuing your yoga journey?</label>
+            <div class="custom-select" id="customSelect">
+                <div class="selected">-- Please choose an option --</div>
+                <div class="options">
+                    <div class="option">Trying to make the payment but shows failed payment / Payment Issue</div>
+                    <div class="option">Cost is too high / Can't afford</div>
+                    <div class="option">Not ready to commit</div>
+                    <div class="option">Other</div>
+                </div>
+            </div>
+            <input type="hidden" id="reason" name="reason" />
+            <div class="error-message" id="reasonError">Please select a reason.</div>
+
+            <label for="details">Want to share more?</label>
+            <textarea id="details" name="details" rows="4"
+                placeholder="Tell us anything that might help us support you better."></textarea>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="Your Age" />
+            <div class="error-message" id="ageError">Age is required.</div>
+
+            <label for="gender">Gender</label>
+            <div class="custom-select" id="genderSelect">
+                <div class="selected">-- Select Gender --</div>
+                <div class="options">
+                    <div class="option">Female</div>
+                    <div class="option">Male</div>
+                    <div class="option">Other</div>
+                </div>
+            </div>
+            <input type="hidden" id="gender" name="gender" />
+            <div class="error-message" id="genderError">Please select your gender.</div>
+
+            <label for="occupation">Occupation</label>
+            <input type="text" id="occupation" name="occupation" placeholder="Your Occupation" />
+            <div class="error-message" id="occupationError">Occupation is required.</div>
+
+            <label for="name">Your Name (optional)</label>
+            <input type="text" id="name" name="name" placeholder="Name" />
+
+            <button type="submit">Send & Get Your Free Gift 🎁</button>
+        </form>
+
+        <div class="thank-you" id="thankYou">Thank you for your response! 🎉</div>
+        <div class="gift-link" id="giftLink">
+            <p>Here's your free Yoga Handbook:
+                <a href="https://assets.habit.yoga/memberapp/Habuild%20Yoga%20Handbook.pdf" target="_blank">Download Now
+                    📘</a>
+            </p>
+        </div>
+        <div class="support-message" id="supportMessage">
+            Having trouble with payment? We're here to help! 💬<br />
+            Reach our team directly on <a href="https://me.habuild.in/support" target="_blank">WhatsApp Support</a>.
+        </div>
+    </div>
+
+    <script>
+        const customSelect = document.getElementById('customSelect');
+        const selected = customSelect.querySelector('.selected');
+        const optionsContainer = customSelect.querySelector('.options');
+        const options = customSelect.querySelectorAll('.option');
+        const reasonInput = document.getElementById('reason');
+
+        const genderSelect = document.getElementById('genderSelect');
+        const genderSelected = genderSelect.querySelector('.selected');
+        const genderOptionsContainer = genderSelect.querySelector('.options');
+        const genderOptions = genderSelect.querySelectorAll('.option');
+        const genderInput = document.getElementById('gender');
+
+        const form = document.getElementById('feedbackForm');
+        const thankYou = document.getElementById('thankYou');
+        const giftLink = document.getElementById('giftLink');
+        const supportMessage = document.getElementById('supportMessage');
+
+        const ageInput = document.getElementById('age');
+        const occupationInput = document.getElementById('occupation');
+
+        const reasonError = document.getElementById('reasonError');
+        const ageError = document.getElementById('ageError');
+        const genderError = document.getElementById('genderError');
+        const occupationError = document.getElementById('occupationError');
+
+        selected.addEventListener('click', () => {
+            optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                selected.textContent = option.textContent;
+                reasonInput.value = option.textContent;
+                reasonError.style.display = 'none';
+                optionsContainer.style.display = 'none';
+
+                if (option.textContent.includes('Payment Issue')) {
+                    form.style.display = 'none';
+                    thankYou.style.display = 'none';
+                    giftLink.style.display = 'none';
+                    supportMessage.style.display = 'block';
+                    supportMessage.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        genderSelected.addEventListener('click', () => {
+            genderOptionsContainer.style.display = genderOptionsContainer.style.display === 'block' ? 'none' : 'block';
+        });
+
+        genderOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                genderSelected.textContent = option.textContent;
+                genderInput.value = option.textContent;
+                genderError.style.display = 'none';
+                genderOptionsContainer.style.display = 'none';
+            });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!customSelect.contains(e.target)) optionsContainer.style.display = 'none';
+            if (!genderSelect.contains(e.target)) genderOptionsContainer.style.display = 'none';
+        });
+
+        ageInput.addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            ageError.style.display = 'none';
+        });
+
+        occupationInput.addEventListener('input', () => {
+            occupationError.style.display = 'none';
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            if (!reasonInput.value.trim()) {
+                reasonError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!ageInput.value.trim()) {
+                ageError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!genderInput.value.trim()) {
+                genderError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!occupationInput.value.trim()) {
+                occupationError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            form.style.display = 'none';
+            thankYou.style.display = 'block';
+            giftLink.style.display = 'block';
+            thankYou.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+
+</html>
